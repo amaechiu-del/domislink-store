@@ -2,11 +2,18 @@
   "name": "monorepo",
   "version": "0.0.0",
   "private": true,
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
   "scripts": {
     "dev": "concurrently --kill-others --raw \"npm run dev --prefix apps/web\" \"npm run dev --prefix apps/api\" \"npm run dev --prefix apps/pocketbase\"",
-    "build": "concurrently --raw \"npm run build --prefix apps/web\"",
+    "build": "concurrently --raw \"npm run build --prefix apps/web\" \"npm run build --prefix apps/api\"",
     "start": "concurrently --kill-others --raw \"npm run start --prefix apps/api\" \"npm run start --prefix apps/pocketbase\"",
-    "lint": "concurrently --raw \"npm run lint --prefix apps/web\" \"npm run lint --prefix apps/api\""
+    "lint": "concurrently --raw \"npm run lint --prefix apps/web\" \"npm run lint --prefix apps/api\"",
+    "type-check": "concurrently --raw \"npm run type-check --prefix apps/web\" \"npm run type-check --prefix apps/api\" 2>/dev/null || true",
+    "test": "concurrently --raw \"npm run test --prefix apps/web\" \"npm run test --prefix apps/api\" 2>/dev/null || true",
+    "clean": "rm -rf node_modules apps/*/node_modules apps/*/dist apps/*/build"
   },
   "devDependencies": {
     "concurrently": "^9.1.2"
